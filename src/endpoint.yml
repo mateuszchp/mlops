@@ -1,3 +1,3 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineEndpoint.schema.json
-name: diabetes-endpoint
+name: diabetes-endpoint-prod
 auth_mode: key
