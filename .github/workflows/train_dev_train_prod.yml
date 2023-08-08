@@ -8,6 +8,7 @@ jobs:
   job1:
     name: DEV - Train the model
     runs-on: ubuntu-latest
+    environment: development
     steps:
     - name: Check out repo
       uses: actions/checkout@main
@@ -25,6 +26,7 @@ jobs:
     name: PROD - Train the model
     needs: job1
     runs-on: ubuntu-latest
+    environment: production
     steps:
     - name: Check out repo
       uses: actions/checkout@main
