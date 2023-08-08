@@ -1,0 +1,21 @@
+name: PROD - Register the model
+
+on:
+  workflow_dispatch:
+
+jobs:
+  register:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@main
+    - name: Install az ml extension
+      run: az extension add -n ml -y
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: Create the model
+      run: |
+        az ml model create --name prod-active-diabetes --path azureml://jobs/shy_yam_99wzm6s5l3/outputs/artifacts/paths/model/ --resource-group rg-dp100-labs --workspace-name mlw-dp100-labs-res
