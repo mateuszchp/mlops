@@ -7,11 +7,6 @@ jobs:
   endpoint:
     runs-on: ubuntu-latest
     environment: production
-
-    
-  deploy:
-    runs-on: ubuntu-latest
-    environment: production
     steps:
     - name: Check out repo
       uses: actions/checkout@main
@@ -21,6 +16,22 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
-    - name: Create the model
+    - name: Create Endpoint
       run: |
-        az ml model create --name prod-active-diabetes --path azureml://jobs/shy_yam_99wzm6s5l3/outputs/artifacts/paths/model/ --resource-group rg-dp100-labs --workspace-name mlw-dp100-labs-res
+        az ml online-endpoint create --name diabetes-endpoint -f src/endpoint.yml --resource-group rg-dp100-labs --workspace-name mlw-dp100-labs-res
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    needs: endpoint
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@main
+    - name: Install az ml extension
+      run: az extension add -n ml -y
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: Deploy The Model
+      run: |
+        az ml online-deployment create --name diabetes-deployment --endpoint diabetes-endpoint -f src/deployment.yml --all-traffic --resource-group rg-dp100-labs --workspace-name mlw-dp100-labs-res
