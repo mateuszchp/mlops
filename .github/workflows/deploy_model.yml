@@ -18,7 +18,7 @@ jobs:
         creds: ${{secrets.AZURE_CREDENTIALS}}
     - name: Create Endpoint
       run: |
-        az ml online-endpoint create --name diabetes-endpoint -f src/endpoint.yml --resource-group rg-dp100-labs --workspace-name mlw-dp100-labs-res
+        az ml online-endpoint create --name diabetes-endpoint-prod -f src/endpoint.yml --resource-group rg-dp100-labs --workspace-name mlw-dp100-labs-res
       #  echo endpoint already exists
   deploy:
     runs-on: ubuntu-latest
