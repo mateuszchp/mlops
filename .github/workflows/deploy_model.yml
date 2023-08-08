@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  endpoint:
+  endpoint-create:
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -22,7 +22,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: production
-    needs: endpoint
+    needs: endpoint-create
     steps:
     - name: Check out repo
       uses: actions/checkout@main
