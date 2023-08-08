@@ -1,8 +1,8 @@
 name: Experiment and Deploy
 
 on:
-  #workflow_dispatch:
-  [pull_request]
+  workflow_dispatch:
+  #[pull_request]
 
 jobs:
   job1:
