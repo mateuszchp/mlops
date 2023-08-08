@@ -18,4 +18,4 @@ jobs:
         creds: ${{secrets.AZURE_CREDENTIALS}}
     - name: Create the model
       run: |
-        az ml model create --name prod-active-diabetes-v1 --path azureml://jobs/shy_yam_99wzm6s5l3/outputs/artifacts/paths/model/ --resource-group rg-dp100-labs --workspace-name mlw-dp100-labs-res
+        az ml model create --name prod-active-diabetes-v2 --path azureml://jobs/shy_yam_99wzm6s5l3/outputs/artifacts/model/ --resource-group rg-dp100-labs --workspace-name mlw-dp100-labs-res
