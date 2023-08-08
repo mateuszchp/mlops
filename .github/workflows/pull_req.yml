@@ -1,4 +1,4 @@
-name: Code checks
+name: Linting, Unit Testing
 
 on:
   [pull_request]
