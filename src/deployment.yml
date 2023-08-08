@@ -1,0 +1,10 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+name: diabetes-deployment
+endpoint_name: diabetes-endpoint
+model:
+  name: prod-active-diabetes
+  #version: 1
+  path: azureml://locations/westeurope/workspaces/a365ccc2-0be7-4d3b-8bbf-d0dc0a259125/models/prod-active-diabetes/versions/1
+  type: custom
+instance_type: Standard_DS3_v2
+instance_count: 1
