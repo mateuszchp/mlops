@@ -1,0 +1,40 @@
+name: Experiment and Deploy
+
+on:
+  #workflow_dispatch:
+  [pull_request]
+
+jobs:
+  job1:
+    name: DEV - Train the model
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@main
+    - name: Install az ml extension
+      run: |
+        az extension add -n ml -y
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: DEV - Trigger Azure Machine Learning job
+      run: |
+        az ml job create --file src/job_dev.yml --resource-group rg-dp100-labs --workspace-name mlw-dp100-labs-res --stream
+  job2:
+    name: PROD - Train the model
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@main
+    - name: Install az ml extension
+      run: |
+        az extension add -n ml -y
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: DEV - Trigger Azure Machine Learning job
+      run: |
+        az ml job create --file src/job.yml --resource-group rg-dp100-labs --workspace-name mlw-dp100-labs-res
